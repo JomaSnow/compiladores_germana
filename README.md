@@ -1,8 +1,11 @@
 # compiladores_germana
 
-sudo apt install flex
+1. Install flex:
+- Ubuntu: `sudo apt install flex`
+- Mac: `brew install flex`
 
-flex lexico.l
-
-gcc -ansi -o demo1 lex.yy.c
+2. Run:
+- `make run`
+or
+- `cd lib && flex -o ./output/lex.yy.c lib/lexico.l && gcc -ansi -o ./output/demo1 output/lex.yy.c`
 
