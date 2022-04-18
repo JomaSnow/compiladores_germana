@@ -1,3 +1,5 @@
+%option outfile="./output/lexical.c" header-file="./output/lexical.h"
+
 /* definições */
 
 Number [0-9]
