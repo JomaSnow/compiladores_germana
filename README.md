@@ -4,6 +4,10 @@
 - Ubuntu: `sudo apt install flex`
 - Mac: `brew install flex`
 
+2. Install bison:
+- Ubuntu: 
+- Mac: `brew install bison`
+
 2. Run:
 - `make run`
 or

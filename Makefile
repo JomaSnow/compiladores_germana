@@ -1,6 +1,8 @@
 compile_lexical:
-	flex -o ./output/lexical.c lib/lexical.l
-	gcc -ansi -o ./output/exec_lexical output/lexical.c
+	flex lib/lexical.l
 
-exec_lexical: compile_lexical
-	./output/exec_lexical
+compile_parser:
+	bison -d -t lib/parser.y
+
+run: compile_lexical compile_parser
+	gcc output/lexical.c parser.tab.c

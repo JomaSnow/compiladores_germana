@@ -2,6 +2,17 @@
 
 /* definições */
 
+%{
+#include <stdio.h>
+#include <string.h>
+
+static int next_column = 1;
+int column = 1;
+#define RETURN_TOKEN column = next_column; next_column += strlen (yytext)
+%}
+
+/*analisador léxico */
+
 Number [0-9]
 Char [a-zA-Z]
 Sign [+-]
@@ -9,36 +20,16 @@ Point [\.]
 Slash [\/]
 Astherisc [\*]
 
-%{
-#include <stdio.h>
-%}
-
-/*analisador léxico */
-
 id          ({Char}|_)({Number}|{Char}|_)*\n
 int         {Sign}?{Number}+\n
 float       {Sign}?({Number}+{Point}{Number}*|{Number}*{Point}{Number}+)\n
-comment     {Slash}({Slash}.*|{Astherisc}.*({Astherisc}{Slash}))\n
-empty       .*
+string      \"(\\.|[^"#{}\\])*\"
+char        \'(\\.|[^"#{}\\])\'
 
 %%
-{id}		  {printf("Identificador\n");}
-{int}     {printf("Inteiro\n");}
-{float}   {printf("Flutuante\n");}
-{comment} {printf("Comentario\n");}
-{empty}		{printf("Erro\n");}
+{id}        { RETURN_TOKEN; yylval.string = strdup (yytext); return ID; }
+{int}       { RETURN_TOKEN; yylval.integer = atoi (yytext); return INT; }
+{float}     { RETURN_TOKEN; yylval.decimal = atof (yytext); return NUMBER; }
+{char}      { RETURN_TOKEN; yylval.string = strdup (yytext); return CHAR_CONST; }
+{string}    { RETURN_TOKEN;  yylval.string = strdup (yytext); return STRING_CONST; }
 %%
-
-/* recomendavel declarar sempre
-   funcao yywrap() */
-int yywrap ();
-
-/* programa principal */
-main() {
-  printf("\nStarting lex \n");
-  yylex(); /* scanner gerado por Flex */
-}
-
-int yywrap() {
- return 1;
-}
