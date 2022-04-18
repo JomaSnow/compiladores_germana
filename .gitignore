@@ -1,4 +1,5 @@
 output/demo1
+output/exec
 output/test
 output/lex.yy.c
 .DS_Store
