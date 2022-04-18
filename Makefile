@@ -1,6 +1,6 @@
-compile:
-	flex -o ./output/lex.yy.c lib/lexico.l
-	gcc -ansi -o ./output/exec output/lex.yy.c
+compile_lexical:
+	flex -o ./output/lexical.c lib/lexical.l
+	gcc -ansi -o ./output/exec_lexical output/lexical.c
 
-run: compile
-	./output/exec
+exec_lexical: compile_lexical
+	./output/exec_lexical

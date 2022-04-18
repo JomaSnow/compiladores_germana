@@ -1,5 +1,2 @@
-output/demo1
-output/exec
-output/test
-output/lex.yy.c
+output/*
 .DS_Store
