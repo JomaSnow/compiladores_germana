@@ -1,3 +1,4 @@
+%option noyywrap
 %option outfile="./output/lexical.c" header-file="./output/lexical.h"
 
 /* definições */
@@ -5,12 +6,13 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "../parser.tab.h"
 
+#include "parser.tab.h"
 
 static int next_column = 1;
 int column = 1;
 #define RETURN_TOKEN column = next_column; next_column += strlen (yytext)
+
 %}
 
 /*analisador léxico */
@@ -32,6 +34,4 @@ char        \'(\\.|[^"#{}\\])\'
 {id}        { RETURN_TOKEN; yylval.string = strdup (yytext); return ID; }
 {int}       { RETURN_TOKEN; yylval.integer = atoi (yytext); return INT; }
 {float}     { RETURN_TOKEN; yylval.decimal = atof (yytext); return NUMBER; }
-{char}      { RETURN_TOKEN; yylval.string = strdup (yytext); return CHAR_CONST; }
-{string}    { RETURN_TOKEN;  yylval.string = strdup (yytext); return STRING_CONST; }
 %%

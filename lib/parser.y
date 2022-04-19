@@ -1,11 +1,15 @@
 %{
   #include <stdio.h>
   #include <math.h>
+  #include "lexical.h"
+  #include "parser.tab.h"
 
   // Needs to declare the propotype of this functions below, it's something realated to
   // the current bison's version
-  int yylex(void);
-  int yyerror(char* s);
+   void yyerror(const char* msg) {
+      fprintf(stderr, "%s\n", msg);
+   }
+   int yylex();
 %}
 
 /*
@@ -24,17 +28,8 @@
 
 %token <decimal> NUMBER
 %token <integer> INT
-%token <ast> CHAR_CONST
-%token <ast> STRING_CONST
 %token <string> ID
 
 %%
-
 input: NUMBER;
-
 %%
-
-int main() {
-    yyparse();
-    return 0;
-}
