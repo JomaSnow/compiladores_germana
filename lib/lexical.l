@@ -5,6 +5,8 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include "../parser.tab.h"
+
 
 static int next_column = 1;
 int column = 1;
