@@ -4,8 +4,8 @@
   #include "lexical.h"
   #include "parser.tab.h"
 
-  // Needs to declare the propotype of this functions below, it's something realated to
-  // the current bison's version
+  // Needs to declare the propotype of these functions below,
+  // it's something related to the current bison's version
    void yyerror(const char* msg) {
       fprintf(stderr, "%s\n", msg);
    }
