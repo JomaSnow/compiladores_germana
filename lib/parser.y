@@ -30,6 +30,7 @@
 %token <string> ID
 %token VOID "void"
 
+%token INT "int"
 %token GREATER ">"
 %token GE   ">="
 %token LOWER "<"
@@ -56,7 +57,7 @@ declaration: var_declaration | fun_declaration ;
 
 var_declaration: type_specifier ID ';' | type_specifier ID '[' INTEGER ']' ;
 
-type_specifier: INTEGER | VOID ;
+type_specifier: INT | VOID ;
 
 fun_declaration: type_specifier ID '(' params ')' compound_stmt ;
 

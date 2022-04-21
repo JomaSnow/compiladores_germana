@@ -7,4 +7,4 @@ compile_parser:
 	mv parser.tab.h ./output/parser.tab.h
 
 run: compile_lexical compile_parser
-	gcc output/lexical.c output/parser.tab.c main.c -o result
+	gcc main.c output/lexical.c output/parser.tab.c -o result

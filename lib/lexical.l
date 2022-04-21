@@ -12,7 +12,6 @@
 static int next_column = 1;
 int column = 1;
 #define RETURN_TOKEN column = next_column; next_column += strlen (yytext)
-
 %}
 
 /*analisador léxico */
@@ -32,7 +31,8 @@ int         {Sign}?{Number}+\n
 "else"      { RETURN_TOKEN; return ELSE; }
 "while"     { RETURN_TOKEN; return WHILE; }
 "return"    { RETURN_TOKEN; return RETURN; }
-"void"      { RETURN_TOKEN; return VOID;}
+"void"      { RETURN_TOKEN; return VOID; }
+"int"      { RETURN_TOKEN; return INT; }
 
 ">" { RETURN_TOKEN; return GREATER; }
 ">=" { RETURN_TOKEN; return GE; }
