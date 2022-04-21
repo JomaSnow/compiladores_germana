@@ -32,7 +32,7 @@ int         {Sign}?{Number}+\n
 "while"     { RETURN_TOKEN; return WHILE; }
 "return"    { RETURN_TOKEN; return RETURN; }
 "void"      { RETURN_TOKEN; return VOID; }
-"int"      { RETURN_TOKEN; return INT; }
+"int"       { RETURN_TOKEN; return INT; }
 
 ">" { RETURN_TOKEN; return GREATER; }
 ">=" { RETURN_TOKEN; return GE; }

@@ -8,3 +8,4 @@ compile_parser:
 
 run: compile_lexical compile_parser
 	gcc main.c output/lexical.c output/parser.tab.c -o result
+	./result

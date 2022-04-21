@@ -26,11 +26,11 @@
   char character;
 }
 
-%token <integer> INTEGER
 %token <string> ID
+%token <integer> INTEGER
+%token INT "int"
 %token VOID "void"
 
-%token INT "int"
 %token GREATER ">"
 %token GE   ">="
 %token LOWER "<"
