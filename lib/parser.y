@@ -78,9 +78,9 @@ param: type_specifier ID ';' | type_specifier ID '[' ']' ;
 
 compound_stmt: '{' local_declarations statement_list '}'
 
-local_declarations: local_declarations var_declaration | ';' ;
+local_declarations: | local_declarations var_declaration ;
 
-statement_list: statement_list statement | ';' ;
+statement_list: | statement_list statement ;
 
 statement: expression_stmt | compound_stmt | selection_stmt | iteration_stmt | return_stmt ;
 
@@ -112,7 +112,7 @@ factor: '(' expression ')' | var | call | INTEGER ;
 
 call: ID '(' args ')' ;
 
-args: arg_list | ';' ;
+args: | arg_list ;
 
 arg_list: arg_list ',' expression | expression ;
 

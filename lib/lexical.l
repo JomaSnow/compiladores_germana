@@ -49,6 +49,7 @@ int         {Sign}?{Number}+
 ";" { NEXT_CHAR_NUMBER; return ';'; }
 "[" { NEXT_CHAR_NUMBER; return '['; }
 "]" { NEXT_CHAR_NUMBER; return ']'; }
+"," { NEXT_CHAR_NUMBER; return ','; }
 
 {int}           { NEXT_CHAR_NUMBER; yylval.integer = atoi (yytext); return INTEGER; }
 {identifier}    { NEXT_CHAR_NUMBER; yylval.string = strdup (yytext); return ID; }
