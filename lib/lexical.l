@@ -28,7 +28,7 @@ int         {Sign}?{Number}+
 "else"      { NEXT_CHAR_NUMBER; return ELSE; }
 "while"     { NEXT_CHAR_NUMBER; return WHILE; }
 "return"    { NEXT_CHAR_NUMBER; return RETURN; }
-"void"      { NEXT_CHAR_NUMBER; printf("void"); return VOID; }
+"void"      { NEXT_CHAR_NUMBER; return VOID; }
 "int"       { NEXT_CHAR_NUMBER; return INT; }
 
 ">" { NEXT_CHAR_NUMBER; return GREATER; }
@@ -42,15 +42,15 @@ int         {Sign}?{Number}+
 "_" { NEXT_CHAR_NUMBER; return UNDERSCORE; }
 "*" { NEXT_CHAR_NUMBER; return TIMES; }
 "/" { NEXT_CHAR_NUMBER; return DIVIDE; }
-"(" { NEXT_CHAR_NUMBER; printf("("); return '('; }
-")" { NEXT_CHAR_NUMBER; printf(")"); return ')'; }
-"{" { NEXT_CHAR_NUMBER; printf("{"); return '{'; }
-"}" { NEXT_CHAR_NUMBER; printf("}"); return '}'; }
+"(" { NEXT_CHAR_NUMBER; return '('; }
+")" { NEXT_CHAR_NUMBER; return ')'; }
+"{" { NEXT_CHAR_NUMBER; return '{'; }
+"}" { NEXT_CHAR_NUMBER; return '}'; }
 ";" { NEXT_CHAR_NUMBER; return ';'; }
 "[" { NEXT_CHAR_NUMBER; return '['; }
 "]" { NEXT_CHAR_NUMBER; return ']'; }
 
 {int}           { NEXT_CHAR_NUMBER; yylval.integer = atoi (yytext); return INTEGER; }
-{identifier}    { NEXT_CHAR_NUMBER; yylval.string = strdup (yytext); printf(yylval.string); ; return ID; }
+{identifier}    { NEXT_CHAR_NUMBER; yylval.string = strdup (yytext); return ID; }
 
 %%
