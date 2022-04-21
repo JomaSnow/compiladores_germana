@@ -74,7 +74,7 @@ params: param_list | VOID ;
 
 param_list: param_list ',' param | param ;
 
-param: type_specifier ID ';' | type_specifier ID '[' ']' ;
+param: type_specifier ID | type_specifier ID '[' ']' ;
 
 compound_stmt: '{' local_declarations statement_list '}'
 

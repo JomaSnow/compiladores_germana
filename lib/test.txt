@@ -1,1 +1,7 @@
-void main(void) { }
+int main(int a,int b) {
+  if (a > 0) {
+    return 1;
+  } else {
+  	return main(a + b, b);
+  }
+}
