@@ -11,7 +11,7 @@
 
 static int next_column = 1;
 int column = 1;
-#define RETURN_TOKEN column = next_column; next_column += strlen (yytext)
+#define NEXT_CHAR_NUMBER column = next_column; next_column += strlen (yytext)
 %}
 
 /*analisador léxico */
@@ -20,30 +20,37 @@ Number [0-9]
 Char [a-zA-Z]
 Sign [+-]
 
-id          ({Char}|_)({Number}|{Char}|_)*\n
-int         {Sign}?{Number}+\n
+identifier  {Char}+
+int         {Sign}?{Number}+
 
 %%
-{id}        { RETURN_TOKEN; yylval.string = strdup (yytext); return ID; }
-{int}       { RETURN_TOKEN; yylval.integer = atoi (yytext); return INTEGER; }
+"if"        { NEXT_CHAR_NUMBER; return IF; }
+"else"      { NEXT_CHAR_NUMBER; return ELSE; }
+"while"     { NEXT_CHAR_NUMBER; return WHILE; }
+"return"    { NEXT_CHAR_NUMBER; return RETURN; }
+"void"      { NEXT_CHAR_NUMBER; printf("void"); return VOID; }
+"int"       { NEXT_CHAR_NUMBER; return INT; }
 
-"if"        { RETURN_TOKEN; return IF; }
-"else"      { RETURN_TOKEN; return ELSE; }
-"while"     { RETURN_TOKEN; return WHILE; }
-"return"    { RETURN_TOKEN; return RETURN; }
-"void"      { RETURN_TOKEN; return VOID; }
-"int"       { RETURN_TOKEN; return INT; }
+">" { NEXT_CHAR_NUMBER; return GREATER; }
+">=" { NEXT_CHAR_NUMBER; return GE; }
+"<" { NEXT_CHAR_NUMBER; return LOWER; }
+"<=" { NEXT_CHAR_NUMBER; return LE; }
+"==" { NEXT_CHAR_NUMBER; return EQ; }
+"!=" { NEXT_CHAR_NUMBER; return NE; }
+"=" { NEXT_CHAR_NUMBER; return ASSIGN; }
+"+" { NEXT_CHAR_NUMBER; return SUM; }
+"_" { NEXT_CHAR_NUMBER; return UNDERSCORE; }
+"*" { NEXT_CHAR_NUMBER; return TIMES; }
+"/" { NEXT_CHAR_NUMBER; return DIVIDE; }
+"(" { NEXT_CHAR_NUMBER; printf("("); return '('; }
+")" { NEXT_CHAR_NUMBER; printf(")"); return ')'; }
+"{" { NEXT_CHAR_NUMBER; printf("{"); return '{'; }
+"}" { NEXT_CHAR_NUMBER; printf("}"); return '}'; }
+";" { NEXT_CHAR_NUMBER; return ';'; }
+"[" { NEXT_CHAR_NUMBER; return '['; }
+"]" { NEXT_CHAR_NUMBER; return ']'; }
 
-">" { RETURN_TOKEN; return GREATER; }
-">=" { RETURN_TOKEN; return GE; }
-"<" { RETURN_TOKEN; return LOWER; }
-"<=" { RETURN_TOKEN; return LE; }
-"==" { RETURN_TOKEN; return EQ; }
-"!=" { RETURN_TOKEN; return NE; }
-"=" { RETURN_TOKEN; return ASSIGN; }
-"+" { RETURN_TOKEN; return SUM; }
-"_" { RETURN_TOKEN; return UNDERSCORE; }
-"*" { RETURN_TOKEN; return TIMES; }
-"/" { RETURN_TOKEN; return DIVIDE; }
+{int}           { NEXT_CHAR_NUMBER; yylval.integer = atoi (yytext); return INTEGER; }
+{identifier}    { NEXT_CHAR_NUMBER; yylval.string = strdup (yytext); printf(yylval.string); ; return ID; }
 
 %%

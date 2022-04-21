@@ -1,1 +1,3 @@
-int main(void) { }
+int function(void) {
+    return ;
+}

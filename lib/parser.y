@@ -4,12 +4,23 @@
   #include "lexical.h"
   #include "parser.tab.h"
 
-  // Needs to declare the propotype of these functions below,
-  // it's something related to the current bison's version
-   void yyerror(const char* msg) {
-      fprintf(stderr, "%s\n", msg);
-   }
-   int yylex();
+  #include <stdlib.h>
+  #include <string.h>
+  #include <stdarg.h>
+  extern int yylineno;
+  extern int column;
+  int has_errors = 0;
+
+  void yyerror(const char *s, ...) {
+      has_errors = 1;
+
+      va_list ap;
+      va_start(ap, s);
+      fprintf(stderr, "%d, %d - ", yylineno, column);
+      vfprintf(stderr, s, ap);
+      fprintf(stderr, "\n");
+  }
+  int yylex();
 %}
 
 /*
@@ -21,9 +32,7 @@
 */
 %union {
   int integer;
-  float decimal;
   char *string;
-  char character;
 }
 
 %token <string> ID
