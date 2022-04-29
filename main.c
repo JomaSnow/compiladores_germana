@@ -10,7 +10,7 @@ extern FILE *yyout;
 extern void yyparse();
 
 int main(int argc, char **argv) {
-    yyin = fopen("./lib/test.txt", "r");
+    yyin = fopen("./lib/tests/fatorial.txt", "r");
 
     printf("\n");
     printf("Parsing...\n");

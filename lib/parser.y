@@ -88,7 +88,7 @@ expression_stmt: expression ';' | ';' ;
 
 selection_stmt: IF '(' expression ')' statement | IF '(' expression ')' statement ELSE statement ;
 
-iteration_stmt: WHILE '(' expression ')' statement ';' ;
+iteration_stmt: WHILE '(' expression ')' statement ;
 
 return_stmt: RETURN ';' | RETURN expression ';' ;
 
