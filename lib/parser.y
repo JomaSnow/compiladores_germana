@@ -111,8 +111,9 @@ declaration: var_declaration | fun_declaration ;
 var_declaration: type_specifier ID ';' {
   Symbol *symbol = find($2);
   if (symbol == NULL) {
-    Symbol *symbol = create( $2, $1, "scope", 1);
+    Symbol *symbol = create( $2, $1, scope, memoryAddress);
     add(symbol);
+    memoryAddress += 4;
   }
   else {
     yyerror("Variable already declared: %s", $2);

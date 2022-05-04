@@ -6,12 +6,12 @@
 int position = 0;
 Symbol *symbols[100];
 
-Symbol *create(char *name, char *type, char *scope, int memoryAddress)
+Symbol *create(char *name, char *type, int scope, int memoryAddress)
 {
     Symbol *symbol = (Symbol *)malloc(sizeof(Symbol));
     strcpy(symbol->name, name);
     strcpy(symbol->type, type);
-    strcpy(symbol->scope, scope);
+    symbol->scope = scope;
     symbol->memoryAddress = memoryAddress;
     symbol->used = 0;
     return symbol;
@@ -37,7 +37,7 @@ Symbol *find(char *name)
 
 void printLine()
 {
-    for (int i = 0; i < 88; i++)
+    for (int i = 0; i < 70; i++)
     {
         printf("-");
     }
@@ -47,13 +47,14 @@ void printLine()
 void printHeader()
 {
     printLine();
-    printf("| NAME               | TYPE               | SCOPE              | MEMORY ADDRESS | USED |\n");
+    printf("| %-10s | %-10s | %-10s | %-14s | %-10s |\n",
+           "NAME", "TYPE", "SCOPE", "MEMORY ADDRESS", "USED");
     printLine();
 }
 
 void printSymbol(int i)
 {
-    printf("| %-18s | %-18s | %-18s | %-14d | %-4d |\n",
+    printf("| %-10s | %-10s | %-10d | %-14d | %-10d |\n",
            symbols[i]->name,
            symbols[i]->type,
            symbols[i]->scope,
