@@ -54,12 +54,12 @@ void printHeader()
 
 void printSymbol(int i)
 {
-    printf("| %-10s | %-10s | %-10d | %-14d | %-10d |\n",
+    printf("| %-10s | %-10s | %-10d | %-14d | %-10s |\n",
            symbols[i]->name,
            symbols[i]->type,
            symbols[i]->scope,
            symbols[i]->memoryAddress,
-           symbols[i]->used);
+           symbols[i]->used == 1 ? "YES" : "NO");
 }
 
 void print()
