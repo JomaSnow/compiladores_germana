@@ -10,9 +10,9 @@ typedef struct Symbol
     int used;
 } Symbol;
 
-Symbol *create(char *name, char *type, int scope, int memoryAddress);
-void add(Symbol *symbol);
-Symbol *find(char *name);
-void print();
+Symbol *createSymbol(char *name, char *type, int scope, int memoryAddress);
+void addSymbol(Symbol *symbol);
+Symbol *findSymbol(char *name);
+void printSymbolTable();
 
 #endif

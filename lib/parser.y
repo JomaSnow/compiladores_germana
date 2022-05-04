@@ -109,10 +109,10 @@ declaration_list: declaration_list declaration | declaration ;
 declaration: var_declaration | fun_declaration ;
 
 var_declaration: type_specifier ID ';' {
-  Symbol *symbol = find($2);
+  Symbol *symbol = findSymbol($2);
   if (symbol == NULL) {
-    Symbol *symbol = create($2, $1, scope, memoryAddress);
-    add(symbol);
+    Symbol *symbol = createSymbol($2, $1, scope, memoryAddress);
+    addSymbol(symbol);
     memoryAddress += 4;
   }
   else {
@@ -133,10 +133,10 @@ params: param_list | VOID ;
 param_list: param_list ',' param | param ;
 
 param: type_specifier ID {
-  Symbol *symbol = find($2);
+  Symbol *symbol = findSymbol($2);
   if (symbol == NULL) {
-    Symbol *symbol = create($2, $1, scope, memoryAddress);
-    add(symbol);
+    Symbol *symbol = createSymbol($2, $1, scope, memoryAddress);
+    addSymbol(symbol);
     memoryAddress += 4;
   }
   else {
@@ -193,7 +193,7 @@ mulop: TIMES {
 } | DIVIDE ;
 
 factor: '(' expression ')' | var {
-  Symbol *symbol = find($1);
+  Symbol *symbol = findSymbol($1);
   if (symbol == NULL) {
     yyerror("Undeclared variable: %s", $1);
   }

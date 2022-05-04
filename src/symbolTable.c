@@ -6,7 +6,7 @@
 int position = 0;
 Symbol *symbols[100];
 
-Symbol *create(char *name, char *type, int scope, int memoryAddress)
+Symbol *createSymbol(char *name, char *type, int scope, int memoryAddress)
 {
     Symbol *symbol = (Symbol *)malloc(sizeof(Symbol));
     strcpy(symbol->name, name);
@@ -17,13 +17,13 @@ Symbol *create(char *name, char *type, int scope, int memoryAddress)
     return symbol;
 }
 
-void add(Symbol *symbol)
+void addSymbol(Symbol *symbol)
 {
     symbols[position] = symbol;
     position++;
 }
 
-Symbol *find(char *name)
+Symbol *findSymbol(char *name)
 {
     for (int i = 0; i < position; i++)
     {
@@ -62,7 +62,7 @@ void printSymbol(int i)
            symbols[i]->used == 1 ? "YES" : "NO");
 }
 
-void print()
+void printSymbolTable()
 {
     printHeader();
     for (int i = 0; i < position; i++)

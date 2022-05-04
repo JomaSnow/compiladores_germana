@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 
     yyparse(yyin);
     
-    print();
+    printSymbolTable();
 
     printf("\n");
     printf("All good.\n");
