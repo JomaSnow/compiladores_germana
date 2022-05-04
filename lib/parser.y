@@ -111,7 +111,7 @@ declaration: var_declaration | fun_declaration ;
 var_declaration: type_specifier ID ';' {
   Symbol *symbol = find($2);
   if (symbol == NULL) {
-    Symbol *symbol = create( $2, $1, scope, memoryAddress);
+    Symbol *symbol = create($2, $1, scope, memoryAddress);
     add(symbol);
     memoryAddress += 4;
   }
@@ -132,7 +132,17 @@ params: param_list | VOID ;
 
 param_list: param_list ',' param | param ;
 
-param: type_specifier ID | type_specifier ID '[' ']' ;
+param: type_specifier ID {
+  Symbol *symbol = find($2);
+  if (symbol == NULL) {
+    Symbol *symbol = create($2, $1, scope, memoryAddress);
+    add(symbol);
+    memoryAddress += 4;
+  }
+  else {
+    yyerror("Variable already declared: %s", $2);
+  }
+} | type_specifier ID '[' ']' ;
 
 compound_stmt: '{' {
   scope++;
