@@ -7,6 +7,10 @@
   #include <stdlib.h>
   #include <string.h>
   #include <stdarg.h>
+
+/*   #include "code.c" */
+  #include "../lib/code.h"
+
   extern int yylineno;
   extern int column;
   int has_errors = 0;
@@ -21,6 +25,36 @@
       fprintf(stderr, "\n");
   }
   int yylex();
+
+  /* TM location number for current instruction emission */
+  static int emitLoc = 0 ;
+
+  /* Highest TM location emitted so far
+    For use in conjunction with emitSkip,
+    emitBackup, and emitRestore */
+  static int highEmitLoc = 0;
+
+  void emitRO( char *op, int r, int s, int t, char *c)
+  { fprintf(yyout,"%3d:  %5s  %d,%d,%d ",emitLoc++,op,r,s,t);
+  //  if (TraceCode) fprintf(code,"\t%s",c) ;
+    fprintf(yyout,"\n") ;
+  //  if (highEmitLoc < emitLoc) highEmitLoc = emitLoc ;
+  } /* emitRO */
+
+  /* Procedure emitRM emits a register-to-memory
+  * TM instruction
+  * op = the opcode
+  * r = target register
+  * d = the offset
+  * s = the base register
+  * c = a comment to be printed if TraceCode is TRUE
+  */
+  void emitRM( char * op, int r, int d, int s, char *c)
+  { fprintf(yyout,"%3d:  %5s  %d,%d(%d) ",emitLoc++,op,r,d,s);
+  //  if (TraceCode) fprintf(code,"\t%s",c) ;
+    fprintf(yyout,"\n") ;
+  //  if (highEmitLoc < emitLoc)  highEmitLoc = emitLoc ;
+  } /* emitRM */
   int scope = 0;
   int memoryAddress = 0;
 %}
@@ -48,7 +82,7 @@
 %token LE   "<="
 %token EQ   "=="
 %token NE   "!="
-%token ASSIGN "="
+%token <string> ASSIGN "="
 %token SUM "+"
 %token UNDERSCORE "_"
 %token TIMES "*"
@@ -58,12 +92,17 @@
 %token RETURN "return"
 %token WHILE "while"
 
+%type <string> addop
+%type <string> mulop
+%type <string> relop
 %type <string> type_specifier
 %type <string> var
 
 %%
 
-program: declaration_list ;
+program: declaration_list {
+  emitRO("HALT", 0, 0, 0, "");
+} ;
 
 declaration_list: declaration_list declaration | declaration ;
 
@@ -114,21 +153,33 @@ iteration_stmt: WHILE '(' expression ')' statement ;
 
 return_stmt: RETURN ';' | RETURN expression ';' ;
 
-expression: var ASSIGN expression | simple_expression ;
+expression: var ASSIGN expression {
+  emitRM("LDC", ac, 1, 0, "load const");
+} | simple_expression ;
 
 var: ID | ID '[' expression ']' ;
 
 simple_expression: additive_expression relop additive_expression | additive_expression ;
 
-relop: LOWER | GREATER | GE | EQ | NE | LE ;
+relop: LOWER | GREATER | GE | EQ | NE | LE {
+  $$=""
+} ;
 
-additive_expression: additive_expression addop term | term ;
+additive_expression: additive_expression addop term {
+  emitRO($2, ac1, 1, 0, "sum x");
+} | term ;
 
-addop: SUM | UNDERSCORE ;
+addop: SUM {
+  $$="ADD"
+}  | UNDERSCORE ;
 
-term: term mulop factor | factor ;
+term: term mulop factor {
+  emitRO($2, ac1, 1, 0, "multiple fat");
+} | factor ;
 
-mulop: TIMES | DIVIDE ;
+mulop: TIMES {
+  $$="MUL"
+} | DIVIDE ;
 
 factor: '(' expression ')' | var {
   Symbol *symbol = find($1);

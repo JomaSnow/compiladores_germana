@@ -17,6 +17,7 @@ extern void yyparse();
 
 int main(int argc, char **argv) {
     yyin = fopen("./lib/tests/fatorial.txt", "r");
+    yyout = fopen("./lib/tests/fatorial-gerador.TM", "w");
 
     printf("\n");
     printf("Parsing...\n");
@@ -29,4 +30,5 @@ int main(int argc, char **argv) {
     printf("\n");
     printf("All good.\n");
     printf("\n");
+    fclose(yyout);
 }
