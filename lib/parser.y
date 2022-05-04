@@ -84,7 +84,7 @@
 %token NE   "!="
 %token <string> ASSIGN "="
 %token SUM "+"
-%token UNDERSCORE "_"
+%token MINUS "-"
 %token TIMES "*"
 %token DIVIDE "/"
 %token IF   "if"
@@ -171,7 +171,7 @@ additive_expression: additive_expression addop term {
 
 addop: SUM {
   $$="ADD"
-}  | UNDERSCORE ;
+}  | MINUS ;
 
 term: term mulop factor {
   emitRO($2, ac1, 1, 0, "multiple fat");
