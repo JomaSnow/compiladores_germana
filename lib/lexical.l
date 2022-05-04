@@ -11,7 +11,7 @@
 
 static int next_column = 1;
 int column = 1;
-#define NEXT_CHAR_NUMBER printf("-> token-found\n"); column = next_column; next_column += strlen (yytext)
+#define NEXT_CHAR_NUMBER ; column = next_column; next_column += strlen (yytext)
 %}
 
 /*analisador léxico */

@@ -1,6 +1,9 @@
 int main(int n) {
     int fat;
     int x;
+    
+    int a;
+    int a;
 
     fat = 1;
     x = 1;
