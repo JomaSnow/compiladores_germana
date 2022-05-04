@@ -20,7 +20,7 @@
 
       va_list ap;
       va_start(ap, s);
-      fprintf(stderr, "%d, %d - ", yylineno, column);
+      fprintf(stderr, "%d, %d - ", yylineno, column-yyleng);
       vfprintf(stderr, s, ap);
       fprintf(stderr, "\n");
   }

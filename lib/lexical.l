@@ -11,7 +11,7 @@
 
 static int next_column = 1;
 int column = 1;
-#define NEXT_CHAR_NUMBER ; column = next_column; next_column += strlen (yytext)
+#define NEXT_CHAR_NUMBER ; column += yyleng;
 %}
 
 /*analisador léxico */
@@ -20,11 +20,12 @@ Number [0-9]
 Char [a-zA-Z]
 Sign [+-]
 
-identifier  {Char}+
+identifier  ({Char}|_)({Number}|{Char}|_)*
 int         {Sign}?{Number}+
 
 %%
-"\n"        {yylineno++; column = 1;}
+[ \t]+      { column+= yyleng; }
+\n          { yylineno++; column = 1; }
 "if"        { NEXT_CHAR_NUMBER; return IF; }
 "else"      { NEXT_CHAR_NUMBER; return ELSE; }
 "while"     { NEXT_CHAR_NUMBER; return WHILE; }
