@@ -163,7 +163,7 @@ var: ID | ID '[' expression ']' ;
 simple_expression: additive_expression relop additive_expression | additive_expression ;
 
 relop: LOWER | GREATER | GE | EQ | NE | LE {
-  $$=""
+  $$="";
 } ;
 
 additive_expression: additive_expression addop term {
@@ -171,7 +171,7 @@ additive_expression: additive_expression addop term {
 } | term ;
 
 addop: SUM {
-  $$="ADD"
+  $$="ADD";
 }  | MINUS ;
 
 term: term mulop factor {
@@ -179,7 +179,7 @@ term: term mulop factor {
 } | factor ;
 
 mulop: TIMES {
-  $$="MUL"
+  $$="MUL";
 } | DIVIDE ;
 
 factor: '(' expression ')' | var {
