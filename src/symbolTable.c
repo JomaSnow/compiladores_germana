@@ -23,16 +23,16 @@ void add(Symbol *symbol)
     position++;
 }
 
-int find(char *name, char *scope)
+Symbol *find(char *name)
 {
     for (int i = 0; i < position; i++)
     {
-        if ((strcmp(symbols[i]->name, name) == 0 && strcmp(symbols[i]->scope, scope) == 0))
+        if ((strcmp(symbols[i]->name, name) == 0))
         {
-            return i;
+            return symbols[i];
         }
     }
-    return -1;
+    return NULL;
 }
 
 void printLine()
@@ -53,12 +53,12 @@ void printHeader()
 
 void printSymbol(int i)
 {
-    printf("| %-20s | %-20s | %-20s | %-6d | %-6d |\n",
+    printf("| %-18s | %-18s | %-18s | %-14d | %-4d |\n",
            symbols[i]->name,
            symbols[i]->type,
            symbols[i]->scope,
            symbols[i]->memoryAddress,
-           symbols[i]->used ? "YES" : "NO");
+           symbols[i]->used);
 }
 
 void print()
@@ -66,7 +66,7 @@ void print()
     printHeader();
     for (int i = 0; i < position; i++)
     {
-        printSymbols(i);
+        printSymbol(i);
         printLine();
     }
 }

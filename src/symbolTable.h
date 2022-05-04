@@ -12,7 +12,7 @@ typedef struct Symbol
 
 Symbol *create(char *name, char *type, char *scope, int memoryAddress);
 void add(Symbol *symbol);
-int find(char *name, char *scope);
+Symbol *find(char *name);
 void print();
 
 #endif

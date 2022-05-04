@@ -7,10 +7,8 @@ compile_parser:
 	mv parser.tab.h ./output/parser.tab.h
 
 compile_semantic:
-	gcc -g -c src/symbolTable.c -o obj/symbolTable.o -I bison
-	gcc -g -c src/tree.c -o obj/tree.o -I bison
-	gcc -g bison/parser.tab.c flex/lex.yy.c obj/symbolTable.o obj/tree.o -I utils -I bison -I flex -Wall
+	gcc -g -c src/symbolTable.c -o symbolTable.o -I bison
 
-run: compile_lexical compile_parser
-	gcc main.c output/lexical.c output/parser.tab.c -o result
+run: compile_lexical compile_parser compile_semantic
+	gcc main.c output/lexical.c output/parser.tab.c symbolTable.o -o result -I src
 	./result
