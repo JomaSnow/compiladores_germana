@@ -3,7 +3,7 @@
   #include <math.h>
   #include "lexical.h"
   #include "parser.tab.h"
-
+  #include "symbolTable.h"
   #include <stdlib.h>
   #include <string.h>
   #include <stdarg.h>
@@ -21,6 +21,8 @@
       fprintf(stderr, "\n");
   }
   int yylex();
+  int scope = 0;
+  int memoryAddress = 0;
 %}
 
 /*
@@ -56,6 +58,9 @@
 %token RETURN "return"
 %token WHILE "while"
 
+%type <string> type_specifier
+%type <string> var
+
 %%
 
 program: declaration_list ;
@@ -64,9 +69,22 @@ declaration_list: declaration_list declaration | declaration ;
 
 declaration: var_declaration | fun_declaration ;
 
-var_declaration: type_specifier ID ';' | type_specifier ID '[' INTEGER ']' ;
+var_declaration: type_specifier ID ';' {
+  Symbol *symbol = find($2);
+  if (symbol == NULL) {
+    Symbol *symbol = create( $2, $1, "scope", 1);
+    add(symbol);
+  }
+  else {
+    yyerror("Variable already declared: %s", $2);
+  }
+} | type_specifier ID '[' INTEGER ']' ;
 
-type_specifier: INT | VOID ;
+type_specifier: INT {
+  $$ = "int";
+} | VOID {
+  $$ = "void";
+} ;
 
 fun_declaration: type_specifier ID '(' params ')' compound_stmt ;
 
@@ -76,7 +94,11 @@ param_list: param_list ',' param | param ;
 
 param: type_specifier ID | type_specifier ID '[' ']' ;
 
-compound_stmt: '{' local_declarations statement_list '}'
+compound_stmt: '{' {
+  scope++;
+} local_declarations statement_list '}' {
+  scope--;
+} ;
 
 local_declarations: | local_declarations var_declaration ;
 
@@ -108,7 +130,15 @@ term: term mulop factor | factor ;
 
 mulop: TIMES | DIVIDE ;
 
-factor: '(' expression ')' | var | call | INTEGER ;
+factor: '(' expression ')' | var {
+  Symbol *symbol = find($1);
+  if (symbol == NULL) {
+    yyerror("Undeclared variable: %s", $1);
+  }
+  else {
+    symbol->used = 1;
+  }
+} | call | INTEGER ;
 
 call: ID '(' args ')' ;
 

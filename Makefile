@@ -6,6 +6,9 @@ compile_parser:
 	mv parser.tab.c ./output/parser.tab.c
 	mv parser.tab.h ./output/parser.tab.h
 
-run: compile_lexical compile_parser
-	gcc main.c output/lexical.c output/parser.tab.c -o result
+compile_semantic:
+	gcc -g -c src/symbolTable.c -o symbolTable.o -I bison
+
+run: compile_lexical compile_parser compile_semantic
+	gcc main.c output/lexical.c output/parser.tab.c symbolTable.o -o result -I src
 	./result

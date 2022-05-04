@@ -3,6 +3,7 @@
 
 #include "output/lexical.h"
 #include "output/parser.tab.h"
+#include "src/symbolTable.h"
 
 extern FILE *yyin;
 extern FILE *yyout;
@@ -20,8 +21,10 @@ int main(int argc, char **argv) {
     printf("\n");
     printf("Parsing...\n");
     printf("\n");
-    
+
     yyparse(yyin);
+    
+    print();
 
     printf("\n");
     printf("All good.\n");
