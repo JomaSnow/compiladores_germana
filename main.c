@@ -17,7 +17,7 @@ extern void yyparse();
 
 int main(int argc, char **argv) {
     yyin = fopen("./lib/tests/fatorial.txt", "r");
-    yyout = fopen("./lib/tests/fatorial-gerador.TM", "w");
+    yyout = fopen("./output/fatorial-gerador.TM", "w");
 
     printf("\n");
     printf("Parsing...\n");

@@ -24,6 +24,7 @@ identifier  {Char}+
 int         {Sign}?{Number}+
 
 %%
+"\n"        {yylineno++; column = 1;}
 "if"        { NEXT_CHAR_NUMBER; return IF; }
 "else"      { NEXT_CHAR_NUMBER; return ELSE; }
 "while"     { NEXT_CHAR_NUMBER; return WHILE; }
