@@ -7,7 +7,12 @@
 extern FILE *yyin;
 extern FILE *yyout;
 
+
+// Mac OSes doesn't define yyparse function
+#ifdef __APPLE__
 extern void yyparse();
+#endif
+
 
 int main(int argc, char **argv) {
     yyin = fopen("./lib/tests/fatorial.txt", "r");
