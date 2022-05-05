@@ -1,15 +1,41 @@
-# compiladores_germana
+# Compiladores - Projeto Final
 
-1. Install flex:
-- Ubuntu: `sudo apt install flex`
-- Mac: `brew install flex`
+Professora Germana
 
-2. Install bison:
-- Ubuntu: 
-- Mac: `brew install bison`
+2021.2
 
-2. Run:
-- `make run`
-or
-- `cd lib && flex -o ./output/lex.yy.c lib/lexico.l && gcc -ansi -o ./output/demo1 output/lex.yy.c`
+## Alunos
 
+    Artur Filgueiras Scheiba Zorron - 180013696
+    Gabriel dos Santos Martins      - 150126298
+    João Marcos Schmaltz Duda       - 150132131
+    Mateus Luiz Freitas Barros      - 150140801
+
+## Objetivo
+
+O objetivo deste projeto foi desenvolver um compilador para a linguagem C implementando analisadores léxicos, sintáticos, semânticos e geradores de código.
+
+## Instalação
+
+Install flex:
+    
+- Ubuntu:
+
+        sudo apt install flex 
+
+- Mac:
+        
+        brew install flex
+
+Install bison:
+
+- Ubuntu:
+        
+        sudo apt install bison
+- Mac:
+        
+        brew install bison
+
+## Execução
+
+    make run
