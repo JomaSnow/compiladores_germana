@@ -3,14 +3,14 @@
 
 typedef struct Symbol
 {
-    char name[20];
-    char type[6];
+    char name[10];
+    char kind[10];
+    char type[10];
     int scope;
-    int memoryAddress;
     int used;
 } Symbol;
 
-Symbol *createSymbol(char *name, char *type, int scope, int memoryAddress);
+Symbol *createSymbol(char *name, char *kind, char *type, int scope);
 void addSymbol(Symbol *symbol);
 Symbol *findSymbol(char *name);
 void printSymbolTable();

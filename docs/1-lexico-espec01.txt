@@ -1,9 +1,0 @@
-Tarefa para quarta-feira (09/02/2022) - Versão 1 do Analisador Léxico do seu grupo
-
-Acrescentar ao lexico.l (demo) as especificações das seguintes classes de token:
-
--> Constante numérica
---> primeiramente inteiros
---> em seguida, para v2 (sinal e ponto flutuante opcional), conforme slide 27, conjunto 02
-
--> Comentário, conforme AF do slide 7, conjunto 03.

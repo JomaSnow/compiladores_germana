@@ -40,6 +40,8 @@ Install bison:
 
     make run
 
-obs.: A depender da versão do Bison no ambiente Linux, a geração do arquivo parser.tab.h trará na penúltima linha uma declaração de "int yyparse (void);". Essa linha deve ser removida após a execução do make run, e em seguida rodar:
+Observacão:
+
+A depender da versão do Bison no ambiente Linux, a geração do arquivo parser.tab.h trará na penúltima linha uma declaração de "int yyparse (void);". Essa linha deve ser removida após a execução do `make run`, e em seguida rodar:
     
-    gcc main.c output/lexical.c output/parser.tab.c symbolTable.o -o result -I src && ./result
+    gcc main.c output/lexical.c output/parser.tab.c output/symbolTable.o -o result -I src && ./result

@@ -8,7 +8,8 @@ compile_parser:
 
 compile_semantic:
 	gcc -g -c src/symbolTable.c -o symbolTable.o -I bison
+	mv symbolTable.o ./output/symbolTable.o
 
 run: compile_lexical compile_parser compile_semantic
-	gcc main.c output/lexical.c output/parser.tab.c symbolTable.o -o result -I src
+	gcc main.c output/lexical.c output/parser.tab.c output/symbolTable.o -o result -I src
 	./result

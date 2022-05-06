@@ -6,13 +6,13 @@
 int position = 0;
 Symbol *symbols[100];
 
-Symbol *createSymbol(char *name, char *type, int scope, int memoryAddress)
+Symbol *createSymbol(char *name, char *kind, char *type, int scope)
 {
     Symbol *symbol = (Symbol *)malloc(sizeof(Symbol));
     strcpy(symbol->name, name);
+    strcpy(symbol->kind, kind);
     strcpy(symbol->type, type);
     symbol->scope = scope;
-    symbol->memoryAddress = memoryAddress;
     symbol->used = 0;
     return symbol;
 }
@@ -37,7 +37,7 @@ Symbol *findSymbol(char *name)
 
 void printLine()
 {
-    for (int i = 0; i < 70; i++)
+    for (int i = 0; i < 53; i++)
     {
         printf("-");
     }
@@ -47,18 +47,22 @@ void printLine()
 void printHeader()
 {
     printLine();
-    printf("| %-10s | %-10s | %-10s | %-14s | %-10s |\n",
-           "NAME", "TYPE", "SCOPE", "MEMORY ADDRESS", "USED");
+    printf("| %-10s | %-10s | %-10s | %-10s |\n",
+           "NAME", "KIND", "TYPE", "USED");
     printLine();
+}
+
+char *getScope(int scope)
+{
+    return (scope == 0) ? "param" : "local";
 }
 
 void printSymbol(int i)
 {
-    printf("| %-10s | %-10s | %-10d | %-14d | %-10s |\n",
+    printf("| %-10s | %-10s | %-10s | %-10s |\n",
            symbols[i]->name,
+           symbols[i]->kind,
            symbols[i]->type,
-           symbols[i]->scope,
-           symbols[i]->memoryAddress,
            symbols[i]->used == 1 ? "YES" : "NO");
 }
 

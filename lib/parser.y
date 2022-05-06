@@ -56,7 +56,6 @@
   //  if (highEmitLoc < emitLoc)  highEmitLoc = emitLoc ;
   } /* emitRM */
   int scope = 0;
-  int memoryAddress = 0;
 %}
 
 /*
@@ -111,9 +110,8 @@ declaration: var_declaration | fun_declaration ;
 var_declaration: type_specifier ID ';' {
   Symbol *symbol = findSymbol($2);
   if (symbol == NULL) {
-    Symbol *symbol = createSymbol($2, $1, scope, memoryAddress);
+    Symbol *symbol = createSymbol($2, "variable", $1, scope);
     addSymbol(symbol);
-    memoryAddress += 4;
   }
   else {
     yyerror("Variable already declared: %s", $2);
@@ -126,7 +124,19 @@ type_specifier: INT {
   $$ = "void";
 } ;
 
-fun_declaration: type_specifier ID '(' params ')' compound_stmt ;
+fun_declaration: type_specifier ID {
+  Symbol *symbol = findSymbol($2);
+  if (symbol == NULL) {
+    Symbol *symbol = createSymbol($2, "function", $1, scope);
+    if (strcmp($2, "main") == 0) {
+      symbol->used = 1;
+    }
+    addSymbol(symbol);
+  }
+  else {
+    yyerror("Function already declared: %s", $2);
+  }
+} '(' params ')' compound_stmt ;
 
 params: param_list | VOID ;
 
@@ -135,9 +145,8 @@ param_list: param_list ',' param | param ;
 param: type_specifier ID {
   Symbol *symbol = findSymbol($2);
   if (symbol == NULL) {
-    Symbol *symbol = createSymbol($2, $1, scope, memoryAddress);
+    Symbol *symbol = createSymbol($2, "param", $1, scope);
     addSymbol(symbol);
-    memoryAddress += 4;
   }
   else {
     yyerror("Variable already declared: %s", $2);
@@ -173,7 +182,7 @@ var: ID | ID '[' expression ']' ;
 simple_expression: additive_expression relop additive_expression | additive_expression ;
 
 relop: LOWER | GREATER | GE | EQ | NE | LE {
-  $$="";
+  $$ = "";
 } ;
 
 additive_expression: additive_expression addop term {
